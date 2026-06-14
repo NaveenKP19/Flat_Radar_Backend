@@ -70,7 +70,7 @@ public class User {
 
     @NotBlank(message = "pincode is required")
    @Pattern(
-           regexp = "^[1-9][0-9]{5} $",
+           regexp = "^[1-9][0-9]{5}$",
            message = "Invalid Pincode"
    )
     @Column(nullable = false)

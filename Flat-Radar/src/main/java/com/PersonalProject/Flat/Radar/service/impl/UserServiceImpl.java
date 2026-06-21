@@ -5,6 +5,7 @@ import com.PersonalProject.Flat.Radar.dto.LoginResponseDto;
 import com.PersonalProject.Flat.Radar.dto.RegisterRequestDto;
 import com.PersonalProject.Flat.Radar.dto.UserResponsDto;
 import com.PersonalProject.Flat.Radar.entity.User;
+import com.PersonalProject.Flat.Radar.enums.Role;
 import com.PersonalProject.Flat.Radar.exception.*;
 import com.PersonalProject.Flat.Radar.mapper.UserMapper;
 import com.PersonalProject.Flat.Radar.repository.UserRepository;
@@ -29,6 +30,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponsDto registerUser(RegisterRequestDto dto) {
         System.out.println("========== SERVICE HIT ==========");
+
+        if(dto.getRole()== Role.ADMIN){
+            throw new IllegalArgumentException("Admin registeration is not allowed");
+        }
+
         if(userRepository.existsByEmail(dto.getEmail())){
             throw new EmailAlreadyExistsException("Email Already Registered");
         }
@@ -64,7 +70,7 @@ public class UserServiceImpl implements UserService {
 
     String token =jwtUtil.generateToken(user.getEmail());
 
-    return new LoginResponseDto(token,"Login Successfully");
+    return new LoginResponseDto(token,user.getRole().name(),"Login Successfully");
     }
 
     @Override

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -46,5 +47,7 @@ public class UserController {
     UserResponsDto response = userService.getProfile(email);
     return ResponseEntity.ok(response);
     }
+
+
 }
 
